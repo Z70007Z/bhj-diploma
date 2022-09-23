@@ -4,4 +4,7 @@
  * */
 const createRequest = (options = {}) => {
 
+    let xhr = new XMLHttpRequest;
+    url: 'https://example.com';
+    method: 'GET';
 };
