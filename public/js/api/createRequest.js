@@ -5,9 +5,15 @@
 const createRequest = (options = {}) => {
 
     let xhr = new XMLHttpRequest;
+    url: 'http://localhost:8000';
+    data: { // произвольные данные, могут отсутствовать
+        email: 'ivan@poselok.ru';
+        password: 'odinodin';
+    };
+    method: 'GET'; // метод запроса
 
     createRequest({
-        url: 'https://example.com',
+        url: 'http://localhost:8000',
         data: {
           mail: 'ivan@biz.pro',
           password: 'odinodin'
@@ -16,7 +22,7 @@ const createRequest = (options = {}) => {
       });
     
       createRequest({
-        url: 'https://example.com',
+        url: 'http://localhost:8000',
         data: {
           mail: 'ivan@biz.pro',
           password: 'odinodin'
@@ -35,8 +41,6 @@ const createRequest = (options = {}) => {
         xhr.addEventListener('error', (e) => {          
             callback(e); 
         });  
-
-
 
     } catch(err) { 
         callback(err);
