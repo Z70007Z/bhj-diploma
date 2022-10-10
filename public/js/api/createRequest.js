@@ -2,108 +2,58 @@
  * Основная функция для совершения запросов
  * на сервер.
  * */
-const createRequest = (options = {}) => {
+function createRequest(options = {}) {
 
     const xhr = new XMLHttpRequest;
-    
-    createRequest({
-        url: 'https://example.com', // адрес
-        data: { // произвольные данные, могут отсутствовать
-          email: 'ivan@poselok.ru',
-          password: 'odinodin'
-        },
-        method: 'GET', // метод запроса
-        /*
-          Функция, которая сработает после запроса.
-          Если в процессе запроса произойдёт ошибка, её объект
-          должен быть в параметре err.
-          Если в запросе есть данные, они должны быть переданы в response.
-        */
-
-
-        callback: (err, response) => {
-          console.log( 'Ошибка, если есть', err );
-          console.log( 'Данные, если нет ошибки', response );
-        }
-      });
-
-    createRequest({
-        url: 'http://localhost:8000',
-        data: {
-          mail: 'ivan@biz.pro',
-          password: 'odinodin'
-        },
-        method: 'GET',
-      });
-    
-      createRequest({
-        url: 'http://localhost:8000',
-        data: {
-          mail: 'ivan@biz.pro',
-          password: 'odinodin'
-        },
-        method: 'POST',
-      });
-
-      xhr.responseType = 'json';
+    formData = new FormData;
+    xhr.responseType = 'json';
       
     try {
 
-        xhr.addEventListener('load', () => {
-            callback(null, xhr.response); 
+        if (options.method === 'GET') {
+
+            xhr.open( 'GET', options.url + '?' + 'mail=' + options.data.mail + '&password=' + options.data.password );
+            xhr.send();
+
+        } else if (options.method === 'POST') {
+
+            formData.append( 'mail', options.data.mail );
+            formData.append( 'password', options.data.password );
+
+            xhr.open( 'POST', options.url );
+            xhr.send(formData);
+
+        }
+
+        xhr.addEventListener('load', (e) => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                options.callback('null', xhr.response);
+            } else {
+                options.callback(xhr.statusText);
+            }
         });
 
-        xhr.addEventListener('error', (e) => {          
-            callback(e); 
-        });  
 
     } catch(err) { 
-        callback(err);
-    }
-
-    callback: ( err, response ) => {
-        console.log( err ); // null
-        console.log( response ); // ответ
+        options.callback(err);
     }
 
 };
 
-        // if (xhr.readyState === 4 && xhr.status === 200) {
-        //     response = xhr.response;
-        //     console.log( 'Данные, если нет ошибки', response );
-        // } else {
-        //     console.log( 'Ошибка, если есть', err );
-        // }
+// createRequest({
+//     url: 'http://localhost:8000',
+//     data: {
+//       mail: 'ivan@biz.pro',
+//       password: 'odinodin'
+//     },
+//     method: 'GET',
+//   });
 
-// xhr.open("GET", "https://netology-slow-rest.herokuapp.com/poll.php");
-// xhr.send();
-// let response = await fetch(url);
-
-// if (response.ok) { // если HTTP-статус в диапазоне 200-299
-//   // получаем тело ответа (см. про этот метод ниже)
-//   let json = await response.json();
-// } else {
-//   alert("Ошибка HTTP: " + response.status);
-// }
-
-
-// url: 'http://localhost:8000';
-// method: 'GET';
-// data: { // произвольные данные, могут отсутствовать
-//     email: 'ivan@poselok.ru';
-//     password: 'odinodin';
-//   };
-
-// try {
-
-//     if (xhr.readyState === 4 && xhr.status === 200) {
-
-//     }
-
-// } catch(err) { 
-//     alert("Запрос не удался, какой-то бред, ничего не понимаю, что от меня нужно ????!");
-// }
-// // url: 'https://example.com';
-// // method: 'GET';
-// // xhr.open("GET", url);
-// // xhr.send();
+//   createRequest({
+//     url: 'http://localhost:8000',
+//     data: {
+//       mail: 'ivan@biz.pro',
+//       password: 'odinodin'
+//     },
+//     method: 'POST',
+//   });
