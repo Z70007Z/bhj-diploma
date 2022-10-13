@@ -29,7 +29,9 @@ class User {
    * из локального хранилища
    * */
   static current() {
+
       return JSON.parse(localStorage.user);
+
   }
 
   /**
@@ -37,7 +39,11 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-
+    createRequest({
+      url: this.url,
+      method: 'GET',
+      callback
+    });  
   }
 
   /**
@@ -68,7 +74,11 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-
+    createRequest({
+      url: this.url,
+      method: 'POST',
+      callback
+    });  
   }
 
   /**
@@ -76,6 +86,10 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-
+    createRequest({
+      url: this.url,
+      method: 'GET',
+      callback
+    });  
   }
 }
