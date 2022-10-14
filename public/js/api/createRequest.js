@@ -27,7 +27,7 @@ function createRequest(options = {}) {
 
         xhr.addEventListener('load', (e) => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                options.callback('null', xhr.response);
+                options.callback(null, xhr.response);
             } else {
                 options.callback(xhr.statusText);
             }

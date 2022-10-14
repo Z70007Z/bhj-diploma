@@ -18,7 +18,18 @@ class Sidebar {
    * при нажатии на кнопку .sidebar-toggle
    * */
   static initToggleButton() {
+    const elementSidebar = document.querySelector(".sidebar-toggle");
+    elementSidebar.addEventListener('click', (e) => {
+      const elementBody = document.querySelector(".skin-blue");
+      if (elementBody.classList.contains('sidebar-open')) {
+        elementBody.classList.remove('sidebar-open');
+        elementBody.classList.remove('sidebar-collapse');
+      } else {
+        elementBody.classList.add('sidebar-open');
+        elementBody.classList.add('sidebar-collapse');
+      }
 
+    })
   }
 
   /**
