@@ -1,4 +1,4 @@
-const { response } = require("express");
+// const { response } = require("express");
 
 /**
  * Класс RegisterForm управляет формой
@@ -13,14 +13,15 @@ class RegisterForm extends AsyncForm {
    * */
   onSubmit(data) {
     User.register(data, (error,response) => {
-
-      if (response.success) {
+     
+        // if (response.status === 200) {
+      if (response.success) {       
         this.element.reset();
         App.setState('user-logged');
         App.getModal('register').close();
       } else {
-          alert(response.error);
-          this.element.reset();
+        alert(response.error);
+        this.element.reset();
       }
     });
     

@@ -30,7 +30,11 @@ class User {
    * */
   static current() {
 
-      return JSON.parse(localStorage.user);
+    try {
+      return JSON.parse(window.localStorage.user);
+    } catch {
+        return undefined;
+    }
 
   }
 
@@ -77,6 +81,7 @@ class User {
     createRequest({
       url: this.url,
       method: 'POST',
+      data,
       callback
     });  
   }

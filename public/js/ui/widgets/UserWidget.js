@@ -12,7 +12,10 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-
+    if (element === null) {
+      this.element = element;
+    }
+    
   }
 
   /**
@@ -22,7 +25,8 @@ class UserWidget {
    * в элемент .user-name устанавливает имя
    * авторизованного пользователя
    * */
-  update(){
-
+  update() {
+    User.current();
+    
   }
 }
