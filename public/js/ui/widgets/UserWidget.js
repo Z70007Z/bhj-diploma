@@ -13,9 +13,10 @@ class UserWidget {
    * */
   constructor(element){
     if (element === null) {
+      alert("Переданный элемент пуст!");
+    } else {
       this.element = element;
-    }
-    
+    }   
   }
 
   /**
@@ -26,7 +27,10 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-    User.current();
+
+   if (User.current()) {
+    document.querySelector('.user-name').textContent = User.current().name;
+   }
     
   }
 }
