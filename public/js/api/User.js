@@ -13,7 +13,7 @@ class User {
   static setCurrent(user) {
 
     // localStorage.setItem(user.id, user.name);
-    localStorage.user = JSON.stringify(user);
+    window.localStorage.user = JSON.stringify(user);
   }
 
   /**
@@ -21,7 +21,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    localStorage.removeItem('user');
+    window.localStorage.removeItem('user');
   }
 
   /**
@@ -44,10 +44,17 @@ class User {
    * */
   static fetch(callback) {
     createRequest({
-      url: this.url,
+      url: this.url + '/current',
       method: 'GET',
-      callback
-    });  
+      callback: (error, response) => {
+          if (response && response.user) {
+              this.setCurrent(response.user);
+          } else {
+              this.unsetCurrent();
+          }
+          callback(error, response);
+      }
+    }); 
   }
 
   /**
@@ -58,8 +65,8 @@ class User {
    * */
   static login(data, callback) {
     createRequest({
-      url: this.URL + '/login',
       method: 'POST',
+      url: this.url + '/login',
       responseType: 'json',
       data,
       callback: (err, response) => {
@@ -79,11 +86,16 @@ class User {
    * */
   static register(data, callback) {
     createRequest({
-      url: this.url,
       method: 'POST',
-      data,
-      callback
-    });  
+      url: this.url + '/register',
+      body: data,
+      callback: (error, response) => {
+        if (response && response.user) {
+          this.setCurrent(response.user);
+        }
+        callback(error, response);
+      }
+    }); 
   }
 
   /**
@@ -91,10 +103,17 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-    createRequest({
-      url: this.url,
-      method: 'GET',
-      callback
-    });  
+    if (confirm('Вы действительно хотите выйти из личного кабинета?')) {
+      createRequest({
+        method: 'POST',
+        url: this.url + '/logout',
+        callback: (error, response) => {
+          if (response.success) {
+            this.unsetCurrent();
+          }
+          callback(error, response);
+        }
+      });
+    } 
   }
 }

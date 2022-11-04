@@ -18,7 +18,7 @@ class AsyncForm {
         throw new SyntaxError("Передан пустой элемент!");
       } else {
         this.element = element;
-        this.registerEvents;
+        this.registerEvents();
       }
     } catch(err) {
       alert(err.message);
@@ -46,13 +46,13 @@ class AsyncForm {
   getData() {
     //  const elementInput = this.element.getElementsByTagName('input');
     const formData = new FormData(this.element);
-    console.log('formData');
-    let arr = {};
-    for (let item of formData.entries()) {
-      arr[item[0]] = item[1];
-    }
+    const encodedData = {};
 
-    return arr;
+    for (let item of formData.entries()) {
+      encodedData[item[0]] = item[1];
+    }
+    return encodedData;
+    
   }
 
   onSubmit(options){
