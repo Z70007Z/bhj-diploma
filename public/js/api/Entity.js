@@ -40,7 +40,7 @@ class Entity {
     createRequest({
       url: this.url,
       data: data,
-      method: 'DELETE ',
+      method: 'DELETE',
       callback
   });
   }

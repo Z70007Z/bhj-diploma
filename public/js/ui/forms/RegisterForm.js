@@ -37,6 +37,7 @@ elemClose.forEach(element => {
   element.addEventListener('click', () => {
      App.getModal('register').close();
      App.getModal('login').close();
+     App.getModal('createAccount').close();
   });
 });
 
@@ -44,5 +45,6 @@ elemExit.forEach(element => {
   element.addEventListener('click', () => {
      App.getModal('register').close();
      App.getModal('login').close();
+     App.getModal('createAccount').close();
   });
 });
